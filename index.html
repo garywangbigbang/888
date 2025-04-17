@@ -3,632 +3,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>名门电商部销售目标合理性计算</title>
+    <title>今日运势测试</title>
     <style>
-        :root {
-            --primary-color: #0071e3;
-            --hover-color: #0077ed;
-            --background-color: #fbfbfd;
-            --text-color: #1d1d1f;
-            --secondary-text: #86868b;
-            --border-color: #d2d2d7;
-            --success-color: #29c75f;
-            --warning-color: #ff9f0a;
-            --error-color: #ff3b30;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: "SF Pro Text", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            line-height: 1.5;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        .container {
-            max-width: 980px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            color: #333;
         }
-
-        .calculator {
-            background: white;
-            padding: 48px;
-            border-radius: 18px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .calculator:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
-        }
-
         h1 {
-            font-size: 48px;
-            font-weight: 600;
             text-align: center;
-            margin-bottom: 48px;
-            background: linear-gradient(135deg, #1d1d1f 0%, #434343 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #007bff;
         }
-
-        .calculator-header {
-            text-align: center;
-            margin-bottom: 40px;
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
-        
-        .calculator-mode {
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            margin-bottom: 32px;
-        }
-        
-        .mode-button {
-            padding: 8px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            background: none;
-            color: var(--text-color);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .mode-button.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-        }
-        
-        .input-group {
-            position: relative;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: flex-end;
-            gap: 12px;
-        }
-
-        .input-wrapper {
-            flex: 1;
-        }
-        
-        .calculate-for-wrapper {
-            display: none;
-            margin-bottom: 8px;
-        }
-
-        .calculate-mode .calculate-for-wrapper {
-            display: block;
-        }
-
-        .calculate-for {
-            position: static;
-            width: auto;
-            height: 44px;
-            padding: 0 16px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            background: white;
-            color: var(--text-color);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            font-size: 14px;
-            white-space: nowrap;
-        }
-        
-        .calculate-for svg {
-            width: 16px;
-            height: 16px;
-            order: 1;
-        }
-        
-        .calculate-for span {
-            order: 0;
-        }
-        
-        .calculate-for:hover {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.2);
-        }
-        
-        .calculate-for.active {
-            background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
-            box-shadow: 0 2px 8px rgba(0, 113, 227, 0.2);
-        }
-
-        .calculate-for:active {
-            transform: translateY(0);
-        }
-        
-        input:disabled {
-            background-color: rgba(0,0,0,0.05);
-            cursor: not-allowed;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 8px;
-            color: var(--text-color);
-            font-size: 17px;
-            font-weight: 500;
-        }
-
-        input {
+        textarea {
             width: 100%;
-            padding: 12px 16px;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            font-size: 17px;
-            color: var(--text-color);
-            background-color: #fff;
-            transition: all 0.3s ease;
+            min-height: 100px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            font-family: inherit;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            -webkit-text-security: disc;
+            text-security: disc;
         }
-
-        input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.1);
-        }
-
-        input::placeholder {
-            color: var(--secondary-text);
-        }
-
         button {
-            width: 100%;
-            padding: 16px;
-            background-color: var(--primary-color);
+            background-color: #007bff;
             color: white;
             border: none;
-            border-radius: 12px;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 16px;
             cursor: pointer;
-            font-size: 17px;
-            font-weight: 500;
-            margin-top: 32px;
-            transition: all 0.3s ease;
+            display: block;
+            width: 100%;
+            margin-bottom: 15px;
         }
-
         button:hover {
-            background-color: var(--hover-color);
-            transform: translateY(-1px);
+            background-color: #0069d9;
         }
-
-        button:active {
-            transform: translateY(0);
-        }
-
         .result {
-            margin-top: 32px;
-            padding: 24px;
-            border-radius: 12px;
-            background-color: #fff;
-            border: 1px solid var(--border-color);
-            display: none;
-            animation: fadeIn 0.5s ease;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            min-height: 100px;
+            background-color: #f8f9fa;
+            white-space: pre-wrap;
+            word-wrap: break-word;
         }
-
         .error {
-            color: var(--error-color);
-            margin-top: 8px;
+            color: #d9534f;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .info {
             font-size: 14px;
-            display: none;
-            animation: fadeIn 0.3s ease;
-        }
-
-        .target-status {
-            font-weight: 500;
-            margin: 16px 0;
-            padding: 16px;
-            border-radius: 12px;
-            font-size: 17px;
-            animation: slideIn 0.5s ease;
-        }
-
-        .achievable {
-            background-color: rgba(41, 199, 95, 0.1);
-            color: var(--success-color);
-        }
-
-        .challenging {
-            background-color: rgba(255, 159, 10, 0.1);
-            color: var(--warning-color);
-        }
-
-        .unrealistic {
-            background-color: rgba(255, 59, 48, 0.1);
-            color: var(--error-color);
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-10px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 20px;
-            }
-            
-            .calculator {
-                padding: 24px;
-            }
-
-            h1 {
-                font-size: 32px;
-                margin-bottom: 32px;
-            }
-
-            input, button {
-                font-size: 16px;
-            }
+            color: #666;
+            margin-top: 20px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="calculator">
-            <div class="calculator-header">
-                <h1>名门电商部销售目标合理性计算</h1>
-                <div class="calculator-mode">
-                    <button class="mode-button active" onclick="switchMode('verify')">目标验证</button>
-                    <button class="mode-button" onclick="switchMode('calculate')">指标计算</button>
-                </div>
-            </div>
-            <div class="input-group">
-                <div class="input-wrapper">
-                    <label for="target">销售目标（元）</label>
-                    <input type="number" id="target" placeholder="请输入销售目标金额" min="0">
-                    <div class="error" id="target-error"></div>
-                </div>
-                <div class="calculate-for-wrapper">
-                    <button class="calculate-for" onclick="setTargetVariable('target')" title="计算此项">
-                        <span>选取此指标进行计算</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 3v3m0 12v3m9-9h-3m-12 0H3"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="input-group">
-                <div class="input-wrapper">
-                    <label for="exposure">展现/曝光量</label>
-                    <input type="number" id="exposure" placeholder="请输入展现/曝光量" min="0">
-                    <div class="error" id="exposure-error"></div>
-                </div>
-                <div class="calculate-for-wrapper">
-                    <button class="calculate-for" onclick="setTargetVariable('exposure')" title="计算此项">
-                        <span>选取此指标进行计算</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 3v3m0 12v3m9-9h-3m-12 0H3"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="input-group">
-                <div class="input-wrapper">
-                    <label for="ctr">点击率（%）</label>
-                    <input type="number" id="ctr" placeholder="请输入点击率" step="0.01" min="0" max="100">
-                    <div class="error" id="ctr-error"></div>
-                </div>
-                <div class="calculate-for-wrapper">
-                    <button class="calculate-for" onclick="setTargetVariable('ctr')" title="计算此项">
-                        <span>选取此指标进行计算</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 3v3m0 12v3m9-9h-3m-12 0H3"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="input-group">
-                <div class="input-wrapper">
-                    <label for="cvr">转化率（%）</label>
-                    <input type="number" id="cvr" placeholder="请输入转化率" step="0.01" min="0" max="100">
-                    <div class="error" id="cvr-error"></div>
-                </div>
-                <div class="calculate-for-wrapper">
-                    <button class="calculate-for" onclick="setTargetVariable('cvr')" title="计算此项">
-                        <span>选取此指标进行计算</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 3v3m0 12v3m9-9h-3m-12 0H3"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <div class="input-group">
-                <div class="input-wrapper">
-                    <label for="price">客单价（元）</label>
-                    <input type="number" id="price" placeholder="请输入客单价" min="0">
-                    <div class="error" id="price-error"></div>
-                </div>
-                <div class="calculate-for-wrapper">
-                    <button class="calculate-for" onclick="setTargetVariable('price')" title="计算此项">
-                        <span>选取此指标进行计算</span>
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <circle cx="12" cy="12" r="3"/>
-                            <path d="M12 3v3m0 12v3m9-9h-3m-12 0H3"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-            <button onclick="calculate()">验证计算</button>
-            <div class="result" id="result"></div>
+        <h1>今日运势</h1>
+        
+        <div>
+            <label for="encryptedInput">请输入您的个人信息码：</label>
+            <textarea id="encryptedInput" placeholder="粘贴您的个人信息码到这里..." style="-webkit-text-security: disc; text-security: disc;"></textarea>
+        </div>
+        
+        <button onclick="decryptText()">测试</button>
+        
+        <div>
+            <label for="decryptedOutput">您的运势结果：</label>
+            <div id="decryptedOutput" class="result"></div>
+        </div>
+        
+        <div id="errorMessage" class="error"></div>
+        
+        <div class="info">
+            此页面可在微信中打开，无需联网即可工作。
         </div>
     </div>
 
     <script>
-        let currentMode = 'verify'; // verify 或 calculate
-        let targetVariable = null; // 要计算的变量
-
-        function switchMode(mode) {
-            currentMode = mode;
-            targetVariable = null;
+        function decryptText() {
+            const encryptedText = document.getElementById('encryptedInput').value.trim();
+            const outputElement = document.getElementById('decryptedOutput');
+            const errorElement = document.getElementById('errorMessage');
             
-            // 重置所有输入框和按钮状态
-            document.querySelectorAll('input').forEach(input => {
-                input.disabled = false;
-                input.value = '';
-            });
+            // 清除之前的内容和错误
+            outputElement.textContent = '';
+            errorElement.textContent = '';
             
-            document.querySelectorAll('.calculate-for').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            document.querySelectorAll('.mode-button').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            document.querySelector(`.mode-button[onclick*="${mode}"]`).classList.add('active');
-            
-            // 更新计算器状态
-            document.querySelector('.calculator').classList.toggle('calculate-mode', mode === 'calculate');
-            
-            // 重置结果显示
-            const resultDiv = document.getElementById('result');
-            resultDiv.style.display = 'none';
-            
-            // 更新按钮文本
-            document.querySelector('button[onclick="calculate()"]').textContent = 
-                mode === 'verify' ? '验证计算' : '计算指标';
-        }
-
-        function setTargetVariable(variable) {
-            if (currentMode !== 'calculate') return;
-            
-            targetVariable = variable;
-            
-            // 更新按钮状态
-            document.querySelectorAll('.calculate-for').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            document.querySelector(`[onclick="setTargetVariable('${variable}')"]`).classList.add('active');
-            
-            // 禁用目标变量的输入框，启用其他输入框
-            document.querySelectorAll('input').forEach(input => {
-                input.disabled = input.id === variable;
-                if (input.id === variable) {
-                    input.value = '';
-                }
-            });
-        }
-
-        function calculate() {
-            // 重置错误和结果显示
-            document.querySelectorAll('.error').forEach(el => el.style.display = 'none');
-            const resultDiv = document.getElementById('result');
-            resultDiv.style.display = 'none';
-
-            // 获取输入值
-            const target = parseFloat(document.getElementById('target').value);
-            const exposure = parseFloat(document.getElementById('exposure').value);
-            const ctr = parseFloat(document.getElementById('ctr').value);
-            const cvr = parseFloat(document.getElementById('cvr').value);
-            const price = parseFloat(document.getElementById('price').value);
-
-            if (currentMode === 'calculate') {
-                // 反向计算模式
-                if (!targetVariable) {
-                    alert('请先选择要计算的指标');
-                    return;
-                }
-
-                let calculatedValue;
-                const clickRate = ctr ? ctr / 100 : 0;
-                const conversionRate = cvr ? cvr / 100 : 0;
-
-                switch (targetVariable) {
-                    case 'target':
-                        calculatedValue = exposure * clickRate * conversionRate * price;
-                        break;
-                    case 'exposure':
-                        if (clickRate && conversionRate && price) {
-                            calculatedValue = target / (clickRate * conversionRate * price);
-                        }
-                        break;
-                    case 'ctr':
-                        if (exposure && conversionRate && price) {
-                            calculatedValue = (target / (exposure * conversionRate * price)) * 100;
-                        }
-                        break;
-                    case 'cvr':
-                        if (exposure && clickRate && price) {
-                            calculatedValue = (target / (exposure * clickRate * price)) * 100;
-                        }
-                        break;
-                    case 'price':
-                        if (exposure && clickRate && conversionRate) {
-                            calculatedValue = target / (exposure * clickRate * conversionRate);
-                        }
-                        break;
-                }
-
-                if (calculatedValue === undefined || isNaN(calculatedValue) || !isFinite(calculatedValue)) {
-                    resultDiv.innerHTML = '<div class="target-status unrealistic">⚠️ 无法计算，请检查输入值是否合理</div>';
-                } else {
-                    let result = '<div class="target-status achievable">计算结果：';
-                    switch (targetVariable) {
-                        case 'target':
-                            result += `销售目标应为 ¥${calculatedValue.toFixed(2)}`;
-                            break;
-                        case 'exposure':
-                            result += `所需展现/曝光量为 ${Math.ceil(calculatedValue)} 次`;
-                            break;
-                        case 'ctr':
-                            result += `所需点击率为 ${calculatedValue.toFixed(2)}%`;
-                            break;
-                        case 'cvr':
-                            result += `所需转化率为 ${calculatedValue.toFixed(2)}%`;
-                            break;
-                        case 'price':
-                            result += `所需客单价为 ¥${calculatedValue.toFixed(2)}`;
-                            break;
-                    }
-                    result += '</div>';
-                    
-                    // 添加合理性分析
-                    result += '<br>合理性分析：<br>';
-                    if (targetVariable === 'ctr' && calculatedValue > 10) {
-                        result += '• 计算得出的点击率偏高，建议调整其他指标<br>';
-                    }
-                    if (targetVariable === 'cvr' && calculatedValue > 10) {
-                        result += '• 计算得出的转化率偏高，建议调整其他指标<br>';
-                    }
-                    if (targetVariable === 'exposure' && calculatedValue > 1000000) {
-                        result += '• 所需展现量较大，建议适当调整其他指标<br>';
-                    }
-                    if (targetVariable === 'price' && calculatedValue > target) {
-                        result += '• 计算得出的客单价大于目标销售额，请检查输入是否正确<br>';
-                    }
-                    
-                    resultDiv.innerHTML = result;
-                }
-            } else {
-                // 原有的验证计算逻辑
-                let hasError = false;
-                if (!target || target <= 0) {
-                    showError('target-error', '请输入有效的销售目标');
-                    hasError = true;
-                }
-                if (!exposure || exposure <= 0) {
-                    showError('exposure-error', '请输入有效的展现/曝光量');
-                    hasError = true;
-                }
-                if (!ctr || ctr <= 0 || ctr > 100) {
-                    showError('ctr-error', '请输入有效的点击率（0-100之间）');
-                    hasError = true;
-                }
-                if (!cvr || cvr <= 0 || cvr > 100) {
-                    showError('cvr-error', '请输入有效的转化率（0-100之间）');
-                    hasError = true;
-                }
-                if (!price || price <= 0) {
-                    showError('price-error', '请输入有效的客单价');
-                    hasError = true;
-                }
-
-                if (hasError) return;
-
-                // 计算预期销售额
-                const clickRate = ctr / 100;
-                const conversionRate = cvr / 100;
-                const expectedSales = exposure * clickRate * conversionRate * price;
-
-                // 分析合理性
-                let analysis = `预计销售额：¥${expectedSales.toFixed(2)}\n`;
-                analysis += `销售目标：¥${target.toFixed(2)}\n\n`;
-                
-                // 计算目标达成率
-                const achievementRate = (expectedSales / target) * 100;
-                
-                // 添加目标可行性分析
-                let targetStatus = '';
-                if (achievementRate >= 90 && achievementRate <= 110) {
-                    targetStatus = '<div class="target-status achievable">✓ 销售目标设定合理</div>';
-                } else if (achievementRate >= 70 && achievementRate < 90) {
-                    targetStatus = '<div class="target-status challenging">⚠️ 销售目标具有挑战性</div>';
-                } else if (achievementRate > 110) {
-                    targetStatus = '<div class="target-status challenging">⚠️ 销售目标可能过于保守</div>';
-                } else {
-                    targetStatus = '<div class="target-status unrealistic">✗ 销售目标可能不切实际</div>';
-                }
-
-                analysis += '数据分析：\n';
-
-                // 点击率分析
-                if (ctr > 10) {
-                    analysis += '• 点击率较高，需要确保流量质量真实有效\n';
-                } else if (ctr < 1) {
-                    analysis += '• 点击率偏低，建议优化商品标题、主图等\n';
-                }
-
-                // 转化率分析
-                if (cvr > 10) {
-                    analysis += '• 转化率较高，建议进一步扩大流量规模\n';
-                } else if (cvr < 1) {
-                    analysis += '• 转化率偏低，建议优化商品详情、价格等因素\n';
-                }
-
-                // 针对目标的具体建议
-                if (achievementRate < 90) {
-                    analysis += '\n改进建议：\n';
-                    if (ctr < 3) {
-                        analysis += '• 优化商品标题、主图和价格展示来提升点击率\n';
-                    }
-                    if (cvr < 3) {
-                        analysis += '• 改善商品详情页面，增加商品信任度来提升转化率\n';
-                    }
-                    if (price < target / (exposure * 0.05)) {
-                        analysis += '• 考虑适当提高客单价或推出高价值商品组合\n';
-                    }
-                    analysis += '• 考虑增加广告投放或优化搜索排名来提高展现/曝光量\n';
-                }
-
-                // 显示结果
-                resultDiv.innerHTML = targetStatus + analysis.replace(/\n/g, '<br>');
+            if (!encryptedText) {
+                errorElement.textContent = '请输入您的个人信息码！';
+                return;
             }
-
-            resultDiv.style.display = 'block';
-        }
-
-        function showError(id, message) {
-            const errorDiv = document.getElementById(id);
-            errorDiv.textContent = message;
-            errorDiv.style.display = 'block';
+            
+            try {
+                // 使用base64解码
+                const decodedText = atob(encryptedText);
+                // 将解码后的二进制转换为UTF-8文本
+                const decoder = new TextDecoder('utf-8');
+                const decodedBytes = new Uint8Array([...decodedText].map(c => c.charCodeAt(0)));
+                const result = decoder.decode(decodedBytes);
+                
+                outputElement.textContent = result;
+            } catch (error) {
+                errorElement.textContent = '解析失败！请确保输入了正确的信息码。';
+                console.error('解密错误:', error);
+            }
         }
     </script>
 </body>
-</html>
+</html> 
